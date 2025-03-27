@@ -1,21 +1,21 @@
-// import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
-export const runtime = 'edge'
+export const runtime = "edge";
 
-export async function GET() {
-  const responseText = 'Hello World'
+type KV = {
+  test: string;
+};
 
-  // In the edge runtime you can use Bindings that are available in your application
-  // (for more details see:
-  //    - https://developers.cloudflare.com/pages/framework-guides/deploy-a-nextjs-site/#use-bindings-in-your-nextjs-application
-  //    - https://developers.cloudflare.com/pages/functions/bindings/
-  // )
-  //
-  // KV Example:
-  // const myKv = getRequestContext().env.MY_KV_NAMESPACE
-  // await myKv.put('suffix', ' from a KV store!')
-  // const suffix = await myKv.get('suffix')
-  // return new Response(responseText + suffix)
+export async function POST() {
+  const context = getRequestContext();
 
-  return new Response(responseText)
+  const text = await context.env.MyTestKV.get("test");
+
+  if (!text) {
+    return new Response("Value not found", { status: 404 });
+  }
+
+  return new Response(text);
 }
+
+function eineFunktion(data: unknown) {}
