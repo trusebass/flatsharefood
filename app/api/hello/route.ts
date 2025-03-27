@@ -6,7 +6,7 @@ type KV = {
   test: string;
 };
 
-export async function POST() {
+export async function GET() {
   const context = getRequestContext();
 
   const text = await context.env.MyTestKV.get("test");
